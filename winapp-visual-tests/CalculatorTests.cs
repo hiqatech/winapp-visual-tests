@@ -8,7 +8,7 @@ namespace winapp_visual_tests
 {
     public class Tests
     {
-
+        private const string WindowsApplicationDriverPath = "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe";
         private const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
         private const string CalculatorAppId = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
         protected static WindowsDriver<WindowsElement> CalculatorSession;
@@ -19,13 +19,13 @@ namespace winapp_visual_tests
         {
             if (CalculatorSession == null)
             {
-                Process.Start(@"C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe");
+                Process.Start(WindowsApplicationDriverPath);
 
                 AppiumOptions options = new AppiumOptions();
-                options.AddAdditionalCapability("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+                options.AddAdditionalCapability("app", CalculatorAppId);
                 options.AddAdditionalCapability("deviceName", "WindowsPC");
 
-                var Driver = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723"), options);
+                var Driver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), options);
                 CalculatorSession = Driver;
                 CalculatorSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1.5);
                 CalculatorResult = CalculatorSession.FindElementByAccessibilityId("CalculatorResults");
